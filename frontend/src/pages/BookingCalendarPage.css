@@ -1,0 +1,261 @@
+/* D:\MeetingRoomBooking\frontend\src\pages\BookingCalendarPage.css */
+
+/* --- 1. General Layout and Controls --- */
+.calendar-page-container {
+    padding: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Inter', Arial, sans-serif; 
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* สีน้ำเงิน */
+    border-bottom: 3px solid #3498DB; 
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    color: #2C3E50;
+    font-weight: 700;
+}
+
+.card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+}
+
+.controls-section {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    /* 👇 ปรับตรงนี้: จัดเรียงให้ Label และ Input อยู่ในแนวเดียวกันจากด้านบน */
+    align-items: flex-start; 
+}
+
+.control-group label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495E;
+    gap: 5px;
+}
+
+.room-select, .date-input {
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    font-size: 1em;
+    min-width: 200px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+
+.room-select:focus, .date-input:focus {
+    border-color: #3498DB;
+    outline: none;
+}
+
+.room-info {
+    font-size: 0.9em;
+    color: #7F8C8D;
+    margin: 0;
+}
+
+/* Loader and Error Message */
+.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    font-size: 1.2em;
+    color: #3498DB;
+}
+
+.icon-spin {
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error-message {
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.empty-state {
+    padding: 25px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px dashed #ced4da;
+    color: #495057;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* --- 2. Status Legend --- */
+.status-legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #F8F9FA;
+    border-radius: 5px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+}
+
+.legend-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+/* --- 3. Time Slots Table (คล้ายกราฟ) --- */
+.table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #E0E0E0;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.time-slots-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 400px;
+    font-size: 0.95em;
+}
+
+.time-slots-table th, .time-slots-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #E0E0E0;
+    color: #34495E;
+}
+
+.time-slots-table thead th {
+    /* น้ำเงินเข้ม */
+    background-color: #2980B9; 
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1em;
+    border-bottom: none;
+}
+
+/* 🟢 เน้นแถวตามสถานะเพื่อให้ดูคล้ายกราฟมากขึ้น (Timeline/Gantt-like) */
+.slot-row {
+    position: relative;
+    /* เพิ่มเส้นคั่นด้านซ้ายเพื่อเน้นสถานะแต่ละช่องเวลา */
+    border-left: 5px solid transparent; 
+}
+
+.slot-row.available {
+    border-left-color: #27AE60; /* เขียวมรกต */
+}
+/* 👇 สถานะ 'จองแล้ว' เป็นสีแดงเข้ม */
+.slot-row.status-confirmed {
+    border-left-color: #C0392B; /* แดงเข้ม */
+}
+.slot-row.status-pending {
+    border-left-color: #F39C12; /* ส้ม */
+}
+
+/* ลบพื้นหลังแถวคู่ที่เคยกำหนดไว้ เพื่อให้สี border-left ชัดเจนขึ้น */
+.time-slots-table tbody tr:nth-child(even) {
+    background-color: white;
+}
+
+.time-slots-table tbody tr:hover {
+    background-color: #EAECEE;
+}
+
+/* Status Tag Styling */
+.status-cell {
+    width: 150px; 
+}
+
+.status-tag {
+    font-weight: 700;
+    border-radius: 4px; /* บล็อกสถานะ */
+    padding: 6px 12px;
+    display: inline-block;
+    text-align: center;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+/* Status Colors (ใช้สีเพื่อให้เข้ากับ Legend) */
+.legend-color.available,
+.status-tag.available {
+    background-color: #D4EDDA; /* เขียวอ่อน */
+    color: #155724; /* เขียวเข้ม */
+}
+
+/* 👇 สถานะ 'จองแล้ว' เป็นสีแดง (Legend และ Tag) */
+.legend-color.status-confirmed,
+.status-tag.status-confirmed {
+    background-color: #FADBD8; /* แดงอ่อน */
+    color: #C0392B; /* แดงเข้ม */
+}
+
+.legend-color.status-pending,
+.status-tag.status-pending {
+    background-color: #FFF3CD; /* เหลืองอ่อน */
+    color: #856404; /* เหลืองเข้ม */
+}
+
+/* --- 4. Responsive --- */
+@media (max-width: 768px) {
+    .calendar-page-container {
+        padding: 15px;
+    }
+    .controls-section {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    .room-select, .date-input {
+        width: 100%;
+    }
+    .time-slots-table th, .time-slots-table td {
+        padding: 10px 8px;
+    }
+    .status-cell {
+        width: auto;
+    }
+}
+
+.time-slots-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px; /* ขยาย min-width เพื่อรองรับคอลัมน์ใหม่ */
+    font-size: 0.95em;
+}

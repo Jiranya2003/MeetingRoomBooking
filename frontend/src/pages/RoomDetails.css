@@ -1,0 +1,181 @@
+/* D:\MeetingRoomBooking\frontend\src\pages\RoomDetails.css */
+
+/* -------------------- 1. ROOM INFO CONTAINER -------------------- */
+
+.room-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.room-meta {
+    background-color: #ECF0F1;
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีเขียว 27AE60 */
+    border-left: 5px solid #27AE60;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+.room-meta p {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    color: #2C3E50;
+    font-size: 1em;
+}
+
+.room-meta .icon-small {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีเขียว 27AE60 */
+    color: #27AE60;
+}
+
+
+/* -------------------- 2. BOOKING FORM CARD -------------------- */
+
+.booking-form-card {
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form-card h3 {
+    border-bottom: 2px solid #F0F0F0;
+    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #34495E;
+}
+
+/* -------------------- 3. FORM INPUTS & BUTTONS (NEW STYLES) -------------------- */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #CCC;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-size: 1em;
+}
+
+.form-input:focus {
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีเขียว 27AE60 */
+    border-color: #27AE60;
+    /* เปลี่ยนสี Shadow ให้เข้ากับสีเขียวใหม่ (ใช้ 27AE60) */
+    box-shadow: 0 0 5px rgba(39, 174, 96, 0.5);
+    outline: none;
+}
+
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    /* เปลี่ยนจากสีแดง C0392B เป็นสีเขียว 2ECC71 */
+    background-color: #2ECC71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover:not(:disabled) {
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีเขียว 27AE60 */
+    background-color: #27AE60;
+    transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+    background-color: #95A5A6;
+    cursor: not-allowed;
+}
+
+/* -------------------- 4. ERROR & NOTES -------------------- */
+
+.error-message {
+    display: flex;
+    align-items: center;
+    /* เปลี่ยนจากสีแดงอ่อน FADBD8 เป็นสีเขียวอ่อน E8F8F5 */
+    background-color: #E8F8F5;
+    /* เปลี่ยนจากสีแดง C0392B เป็นสีเขียว 2ECC71 */
+    color: #2ECC71;
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีเขียว 27AE60 */
+    border: 1px solid #27AE60;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.icon-error {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.note-duration {
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #7F8C8D;
+    text-align: center;
+}
+
+/* -------------------- 5. DATETIME LAYOUT (NEW STYLES) -------------------- */
+
+/* Container หลักที่แบ่ง Start Group กับ End Group */
+.form-datetime-group {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* Container ย่อยที่แบ่ง Date Input กับ Time Input */
+.datetime-pair {
+    flex: 1;
+    display: flex;
+    gap: 15px;
+    min-width: 250px;
+}
+
+/* ไอคอนเล็กสำหรับ Label */
+.icon-tiny {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    /* เปลี่ยนจากสีแดง C0392B เป็นสีเขียว 2ECC71 */
+    color: #2ECC71;
+}
+
+/* -------------------- 6. RESPONSIVE ADJUSTMENTS -------------------- */
+@media (max-width: 600px) {
+    .form-datetime-group {
+        flex-direction: column;
+        gap: 0;
+    }
+    .datetime-pair {
+        flex-direction: column;
+        gap: 0;
+        min-width: 100%;
+    }
+}

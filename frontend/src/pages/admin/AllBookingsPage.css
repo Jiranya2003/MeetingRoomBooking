@@ -1,0 +1,121 @@
+/* --- General Layout and Containers --- */
+.bookings-page-container {
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.page-header {
+    color: #007bff;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+/* --- Messages and States --- */
+.loading-message {
+    padding: 20px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    text-align: center;
+    color: #495057;
+    font-size: 1.1em;
+}
+
+.error-message {
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.empty-state {
+    padding: 40px;
+    background-color: #ffffff;
+    border: 1px dashed #ced4da;
+    border-radius: 8px;
+    text-align: center;
+    color: #6c757d;
+    font-size: 1.2em;
+}
+
+/* --- Table Styling --- */
+.table-wrapper {
+    overflow-x: auto; /* Enable horizontal scrolling on small screens */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    background-color: white;
+}
+
+.bookings-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 900px; /* Ensures table has minimum readable width */
+}
+
+.bookings-table th, .bookings-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Table Header */
+.bookings-table thead tr {
+    background-color: #343a40; /* Dark background */
+    color: white;
+}
+
+.bookings-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+/* Table Body */
+.bookings-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Zebra stripe effect */
+}
+
+.bookings-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* --- Status Tag Styling --- */
+.status-cell {
+    white-space: nowrap; /* Prevent status tags from wrapping */
+}
+
+.status-tag {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Confirmed Status */
+.status-cell.status-confirmed .status-tag {
+    background-color: #d4edda; /* Light Green */
+    color: #155724; /* Dark Green Text */
+}
+
+/* Pending Status */
+.status-cell.status-pending .status-tag {
+    background-color: #fff3cd; /* Light Yellow */
+    color: #856404; /* Dark Yellow Text */
+}
+
+/* Cancelled/Rejected Status */
+.status-cell.status-cancelled .status-tag,
+.status-cell.status-rejected .status-tag {
+    background-color: #f8d7da; /* Light Red */
+    color: #721c24; /* Dark Red Text */
+}

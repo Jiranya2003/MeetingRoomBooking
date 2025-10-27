@@ -1,0 +1,188 @@
+/* --- General Layout and Page Setup --- */
+.room-management-container {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.page-header {
+    color: #007bff;
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+/* --- Card and Form Styling --- */
+.card {
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.card h3 {
+    color: #343a40;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
+
+/* Create Form Grid Layout */
+.create-form-grid {
+    display: grid;
+    /* 6 columns for inputs/buttons */
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 15px;
+    align-items: center;
+}
+
+/* Ensure inputs take appropriate space, button takes 2 slots */
+.create-form-grid .form-input:nth-child(1), 
+.create-form-grid .form-input:nth-child(2),
+.create-form-grid .form-input:nth-child(3) {
+    grid-column: span 1;
+}
+
+.create-form-grid .form-input:nth-child(4),
+.create-form-grid .form-input:nth-child(5) {
+    grid-column: span 2;
+}
+
+
+/* Input Fields */
+.form-input {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* Primary Button (Create Room) */
+.btn-create {
+    grid-column: span 2; /* ปุ่มใช้พื้นที่ 2 ช่อง */
+    padding: 10px 15px;
+    background-color: #28a745; /* Green for Create */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    height: 40px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-create:hover {
+    background-color: #1e7e34;
+}
+
+/* --- Messages and States --- */
+.loading-message, .empty-state {
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.loading-message { background-color: #e9ecef; color: #495057; }
+.error-message { 
+    background-color: #f8d7da; 
+    color: #721c24; 
+    padding: 15px; 
+    border-radius: 6px; 
+    margin-bottom: 20px;
+}
+
+/* --- Data Table Styling --- */
+.table-wrapper {
+    overflow-x: auto; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white;
+    min-width: 800px; 
+}
+
+.data-table th, .data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Table Header */
+.data-table thead tr {
+    background-color: #343a40; 
+    color: white;
+}
+
+.data-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+/* Table Body */
+.data-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.data-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* --- Action Buttons --- */
+.btn-icon {
+    background: none;
+    border: 1px solid #dc3545; /* Default border for delete */
+    color: #dc3545;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.btn-delete:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .room-management-container {
+        padding: 15px;
+    }
+    /* Stack form elements vertically on small screens */
+    .create-form-grid {
+        grid-template-columns: 1fr;
+    }
+    .create-form-grid input,
+    .btn-create {
+        grid-column: 1 / -1; /* Make all elements full width */
+    }
+    
+    .data-table th, .data-table td {
+        padding: 10px 8px;
+        font-size: 0.85em;
+    }
+}

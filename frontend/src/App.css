@@ -1,0 +1,237 @@
+/* -------------------- 1. GLOBAL STYLES -------------------- */
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif; 
+    background-color: #F8F8F8;
+    color: #333;
+}
+
+.app-container {
+    min-height: 100vh;
+}
+
+/* Layout หลัก: Nav + Sidebar + Content */
+.main-layout {
+    display: flex;
+    min-height: calc(100vh - 64px); /* ลบความสูง Navbar */
+    overflow: hidden;
+}
+
+.content-area {
+    flex: 1;
+    padding: 20px 40px;
+    overflow-y: auto;
+}
+
+.page-header {
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีน้ำเงิน 3498DB */
+    border-bottom: 3px solid #3498DB;
+    padding-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    color: #2C3E50;
+    font-weight: 700;
+}
+
+.status-message {
+    font-size: 1.1em;
+    /* คงสีเทาเดิม 7F8C8D ไว้ เนื่องจากไม่เกี่ยวข้องกับธีมสีหลัก */
+    color: #7F8C8D;
+    padding: 15px 0;
+}
+
+/* -------------------- 2. NAV BAR STYLES -------------------- */
+.navbar {
+    padding: 15px 40px;
+    /* เปลี่ยนจากสีแดง C0392B เป็นสีน้ำเงินเข้ม 2980B9 */
+    background-color: #2980B9;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+}
+
+.nav-links-left {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    color: #ECF0F1;
+    text-decoration: none;
+    padding: 0 12px;
+    transition: color 0.2s, opacity 0.2s;
+}
+
+.nav-link:hover {
+    color: white;
+    opacity: 0.9;
+}
+
+.nav-link-brand {
+    font-weight: bold;
+    font-size: 1.2em;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo {
+    height: 30px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.nav-separator {
+    color: #ECF0F1;
+    padding: 0 5px;
+}
+
+.auth-info {
+    /* เปลี่ยนจากสีแดงอ่อน FADBD8 เป็นสีฟ้าอ่อน D6EAF8 */
+    color: #D6EAF8;
+    margin-right: 15px;
+}
+
+.logout-button {
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีน้ำเงิน 3498DB */
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 15px;
+    transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+    /* เปลี่ยนจากสีแดงเข้ม C0392B เป็นสีน้ำเงินเข้ม 2980B9 */
+    background-color: #2980B9;
+}
+
+/* -------------------- 3. SIDEBAR STYLES -------------------- */
+.sidebar {
+    width: 250px;
+    background-color: #FFFFFF;
+    border-right: 1px solid #E0E0E0;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.sidebar-header {
+    margin-top: 0;
+    margin-bottom: 20px;
+    /* เปลี่ยนจากสีแดง C0392B เป็นสีน้ำเงินเข้ม 2980B9 */
+    color: #2980B9;
+    font-size: 1.1em;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.sidebar-separator {
+    margin: 20px 0 10px 0;
+    padding-top: 10px;
+    border-top: 1px solid #F0F0F0;
+    color: #999;
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.sidebar-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #34495E;
+    padding: 12px 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    background-color: transparent;
+}
+
+.sidebar-link:hover {
+    /* เปลี่ยนจากสีแดงอ่อน FADBD8 เป็นสีฟ้าอ่อน D6EAF8 */
+    background-color: #D6EAF8;
+    /* เปลี่ยนจากสีแดง C0392B เป็นสีน้ำเงิน 3498DB */
+    color: #3498DB;
+}
+
+.sidebar-link.active {
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีน้ำเงิน 3498DB */
+    background-color: #3498DB;
+    color: white;
+    font-weight: 600;
+    /* เปลี่ยนสี Shadow ให้เข้ากับสีน้ำเงินใหม่ (ใช้ 3498DB) */
+    box-shadow: 0 2px 5px rgba(52, 152, 219, 0.4);
+}
+
+.sidebar-link .link-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-btn {
+    /* เปลี่ยนจากสีแดง E74C3C เป็นสีน้ำเงิน 3498DB */
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: auto; /* ดันปุ่ม Logout ไปด้านล่าง Sidebar */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+    /* เปลี่ยนจากสีแดงเข้ม C0392B เป็นสีน้ำเงินเข้ม 2980B9 */
+    background-color: #2980B9;
+}
+
+.logout-btn .link-icon {
+    margin-right: 8px;
+}
+
+/* -------------------- 4. RESPONSIVE -------------------- */
+@media (max-width: 768px) {
+    .main-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 10px;
+    }
+
+    .sidebar-links {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .sidebar-link {
+        padding: 8px 6px;
+        font-size: 0.9em;
+    }
+
+    .content-area {
+        padding: 10px 15px;
+    }
+}

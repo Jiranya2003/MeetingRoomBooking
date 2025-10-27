@@ -1,0 +1,284 @@
+/* --- General Page Setup --- */
+.booking-page-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+}
+
+.page-header {
+    color: #007bff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 25px;
+}
+
+h4 {
+    color: #333;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* --- Layout: Sidebar and Main Content --- */
+.booking-layout {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 25px;
+}
+
+@media (min-width: 992px) {
+    .booking-layout {
+        grid-template-columns: 300px 1fr; 
+    }
+}
+
+/* --- Sidebar Styling --- */
+.booking-sidebar {
+    padding: 25px;
+    position: sticky;
+    top: 20px; 
+    height: fit-content;
+}
+
+.room-select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    margin-bottom: 20px;
+    appearance: none; 
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M6%209l-4-4h8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.room-details-card {
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #eaf6ff;
+    border: 1px solid #cce5ff;
+}
+
+/* --- Main Content: Form, Time Grid, and Bookings --- */
+.booking-main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.booking-form.card {
+    padding: 0; 
+    overflow: hidden;
+}
+
+.availability-section {
+    padding: 25px;
+}
+
+.time-selection-form {
+    padding: 25px;
+    padding-top: 20px; 
+    border-top: 1px solid #e0e0e0;
+}
+
+.date-time-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* ... (โค้ดสำหรับ input field และ button เดิม) ... */
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.input-field {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* --- Messages and Loader (โค้ดเดิม) --- */
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    font-weight: 500;
+}
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-size: 1.2em;
+    color: #007bff;
+}
+.icon-spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+/* ---------------------------------------------------- */
+/* 🚨 Time Slot Calendar / Availability Grid */
+/* ---------------------------------------------------- */
+.availability-grid {
+    display: grid;
+    /* ปรับให้แสดงได้ถึง 6 ช่องต่อแถว เพื่อให้เห็นภาพรวมมากขึ้น */
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); 
+    gap: 8px; 
+    margin-top: 15px;
+}
+
+.time-slot {
+    padding: 8px 5px; 
+    border-radius: 6px;
+    font-size: 0.85em; 
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    user-select: none;
+}
+
+/* สถานะ: ว่าง (Available) */
+.time-slot.available {
+    background-color: #e6ffed; /* เขียวอ่อน */
+    color: #1a5e2a;
+    border-color: #4cd17c;
+}
+.time-slot.available:hover {
+    background-color: #d1f7e0;
+    border-color: #28a745;
+}
+
+/* สถานะ: จองแล้ว (Not Available) */
+.time-slot.booked, 
+.time-slot.status-pending,
+.time-slot.status-confirmed,
+.time-slot.status-cancelled {
+    background-color: #f5f5f5; 
+    color: #999;
+    border-color: #ddd;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 🚨 ช่องที่ถูกเลือก (Selection Range) */
+.time-slot.selected-slot {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.4);
+}
+
+
+/* ---------------------------------------------------- */
+/* 🚨 Booking Status Legend (รายการสถานะ) */
+/* ---------------------------------------------------- */
+.status-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 10px 0; 
+    font-size: 0.9em;
+    border-top: 1px solid #eee;
+    margin-top: 0;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+}
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+.legend-color.available { background-color: #e6ffed; border-color: #4cd17c; }
+.legend-color.status-confirmed { background-color: #d4edda; border-color: #28a745; }
+.legend-color.status-pending { background-color: #fff3cd; border-color: #ffc107; }
+
+/* --- Existing Bookings List --- */
+.existing-bookings-section {
+    padding: 25px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.booking-slot-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px; 
+    border-radius: 8px; 
+    font-size: 1em; 
+    gap: 15px;
+    justify-content: space-between;
+    border-left: 5px solid #e0e0e0;
+}
+
+/* Status Colors: ใช้สีพื้นอ่อนใน item และใช้สีเข้มที่ border-left/tag */
+.booking-slot-item.status-pending {
+    background-color: #fffbf0;
+    border-left-color: #ffc107;
+}
+.booking-slot-item.status-confirmed {
+    background-color: #f0fff4;
+    border-left-color: #28a745;
+}
+.booking-slot-item.status-cancelled {
+    background-color: #fff0f0;
+    border-left-color: #dc3545;
+    opacity: 0.8;
+}
+
+.status-pending .booking-status-tag { background-color: #fff3cd; color: #856404; }
+.status-confirmed .booking-status-tag { background-color: #d4edda; color: #155724; }
+.status-cancelled .booking-status-tag { background-color: #f8d7da; color: #721c24; }

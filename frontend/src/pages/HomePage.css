@@ -1,0 +1,81 @@
+/* D:\MeetingRoomBooking\frontend\src\pages\HomePage.css - ROOM CARD STYLES */
+
+.room-grid {
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px; 
+}
+
+.room-card {
+    background-color: white; 
+    border-radius: 10px; 
+    padding: 25px;
+    border: 1px solid #E0E0E0; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.room-card.hovered {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1); 
+    transform: translateY(-5px) scale(1.02);
+}
+
+.room-card.clicked {
+    background-color: #F5F5F5; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+    transform: translateY(-1px) scale(0.99); 
+}
+
+.card-title {
+    color: #2C3E50; 
+    margin: 0 0 10px 0;
+    font-size: 1.3em; 
+    font-weight: 700;
+    display: flex; 
+    align-items: center;
+}
+
+.room-code {
+    font-size: 1.0em; 
+    color: #C0392B; 
+    font-weight: 900;
+    padding-right: 8px; 
+}
+
+.room-subtitle {
+    font-size: 0.7em; 
+    font-weight: 600;
+    color: #C0392B;
+    background-color: #FADBD8; 
+    border: 1px solid #E74C3C; 
+    border-radius: 4px;
+    padding: 2px 6px;
+    margin-left: 5px;
+    white-space: nowrap; 
+}
+
+.card-location, .card-capacity {
+    display: flex; 
+    align-items: center;
+    margin: 8px 0;
+    color: #34495E;
+}
+
+.btn-details {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 9px 18px; 
+    background-color: #E74C3C; 
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s, transform 0.1s;
+    font-weight: 600;
+    font-size: 0.9em; 
+}
+
+.btn-details:hover {
+    background-color: #C0392B;
+    transform: translateY(-1px);
+}
