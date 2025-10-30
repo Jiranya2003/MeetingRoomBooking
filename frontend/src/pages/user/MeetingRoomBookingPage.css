@@ -1,5 +1,5 @@
 /* --- General Page Setup --- */
-.booking-page-container {
+.calendar-page-container {
     max-width: 1200px;
     margin: 30px auto;
     padding: 20px;
@@ -73,6 +73,18 @@ h4 {
     background-color: #eaf6ff;
     border: 1px solid #cce5ff;
 }
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+    font-size: 0.95em;
+    color: #333;
+}
+.detail-item span {
+    font-weight: 600;
+    color: #007bff;
+}
 
 /* --- Main Content: Form, Time Grid, and Bookings --- */
 .booking-main-content {
@@ -103,7 +115,6 @@ h4 {
     margin-bottom: 20px;
 }
 
-/* ... (โค้ดสำหรับ input field และ button เดิม) ... */
 .form-group label {
     display: flex;
     align-items: center;
@@ -122,6 +133,10 @@ h4 {
     transition: border-color 0.3s;
 }
 
+.input-field.full-width {
+    width: 100%;
+}
+
 .btn-primary {
     width: 100%;
     padding: 12px 20px;
@@ -138,8 +153,15 @@ h4 {
     justify-content: center;
     gap: 10px;
 }
+.btn-primary:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+.btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+}
 
-/* --- Messages and Loader (โค้ดเดิม) --- */
+/* --- Messages and Loader --- */
 .error-message {
     background-color: #f8d7da;
     color: #721c24;
@@ -162,11 +184,10 @@ h4 {
 
 
 /* ---------------------------------------------------- */
-/* 🚨 Time Slot Calendar / Availability Grid */
+/* 🚨 Time Slot Calendar / Availability Grid Styles */
 /* ---------------------------------------------------- */
 .availability-grid {
     display: grid;
-    /* ปรับให้แสดงได้ถึง 6 ช่องต่อแถว เพื่อให้เห็นภาพรวมมากขึ้น */
     grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); 
     gap: 8px; 
     margin-top: 15px;
@@ -179,45 +200,76 @@ h4 {
     text-align: center;
     font-weight: 500;
     transition: all 0.2s;
-    cursor: pointer;
     border: 1px solid #ddd;
     user-select: none;
 }
 
-/* สถานะ: ว่าง (Available) */
+/* 📌 สถานะ: ว่าง (Available) */
 .time-slot.available {
-    background-color: #e6ffed; /* เขียวอ่อน */
-    color: #1a5e2a;
-    border-color: #4cd17c;
+    background-color: #28a745; /* สีเขียวเข้ม (เพื่อให้ตัดกับสีขาว) */
+    color: white;
+    border-color: #1e7e34;
+    cursor: pointer;
 }
 .time-slot.available:hover {
-    background-color: #d1f7e0;
-    border-color: #28a745;
+    background-color: #1e7e34;
 }
 
-/* สถานะ: จองแล้ว (Not Available) */
-.time-slot.booked, 
-.time-slot.status-pending,
-.time-slot.status-confirmed,
-.time-slot.status-cancelled {
-    background-color: #f5f5f5; 
+/* 📌 สถานะ: ถูกจองแล้ว/อนุมัติ (Confirmed) - ต้องเป็นสีแดง */
+.time-slot.status-confirmed {
+    background-color: #dc3545; /* สีแดงเข้ม */
+    color: white; 
+    font-weight: bold;
+    border: 1px solid #c82333;
+}
+
+/* 📌 สถานะ: รอการอนุมัติ (Pending) - สีเหลือง/ส้ม */
+.time-slot.status-pending {
+    background-color: #ffc107; 
+    color: #333;
+    border: 1px solid #e0a800;
+}
+
+/* 📌 สถานะ: เวลาที่ผ่านไปแล้ว (Past) */
+.time-slot.status-past {
+    background-color: #e0e0e0; /* สีเทาอ่อน */
+    color: #888; 
+    border: 1px solid #ccc;
+}
+
+/* 📌 สถานะ: ถูกปิดการใช้งาน (ใช้สำหรับ Confirmed, Pending, Past) */
+.time-slot.disabled-slot {
+    cursor: not-allowed; 
+    opacity: 0.8; 
+    pointer-events: none; /* เพื่อให้แน่ใจว่าคลิกไม่ได้เลย */
+}
+
+
+/* 📌 สถานะ: เสร็จสิ้น/ยกเลิก (Completed/Cancelled) */
+.time-slot.completed,
+.time-slot.cancelled {
+    background-color: #f5f5f5;
     color: #999;
     border-color: #ddd;
-    cursor: not-allowed;
-    opacity: 0.7;
+    cursor: default;
+    opacity: 0.6;
+    text-decoration: line-through;
 }
+
 
 /* 🚨 ช่องที่ถูกเลือก (Selection Range) */
 .time-slot.selected-slot {
-    background-color: #007bff;
-    color: white;
-    border-color: #0056b3;
+    background-color: #007bff !important; 
+    color: white !important;
+    border-color: #0056b3 !important;
+    font-weight: bold;
     box-shadow: 0 2px 5px rgba(0, 123, 255, 0.4);
+    transform: scale(1.05);
 }
 
 
 /* ---------------------------------------------------- */
-/* 🚨 Booking Status Legend (รายการสถานะ) */
+/* 🚨 Status Legend and Existing Bookings List Styles */
 /* ---------------------------------------------------- */
 .status-legend {
     display: flex;
@@ -241,18 +293,28 @@ h4 {
     border-radius: 3px;
     border: 1px solid #ddd;
 }
-.legend-color.available { background-color: #e6ffed; border-color: #4cd17c; }
-.legend-color.status-confirmed { background-color: #d4edda; border-color: #28a745; }
-.legend-color.status-pending { background-color: #fff3cd; border-color: #ffc107; }
+
+/* 📌 สีสำหรับ Legend */
+.legend-color.available { background-color: #28a745; border-color: #1e7e34; }
+.legend-color.status-confirmed { background-color: #dc3545; border-color: #c82333; } 
+.legend-color.status-pending { background-color: #ffc107; border-color: #e0a800; }
+.legend-color.status-past { background-color: #e0e0e0; border-color: #ccc; }
+
 
 /* --- Existing Bookings List --- */
+/* (สไตล์นี้ยังไม่ได้แก้ไขตามสถานะ confirmed/pending ใน Grid แต่ยังใช้ได้) */
 .existing-bookings-section {
     padding: 25px;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
-
+.existing-bookings-list {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 .booking-slot-item {
     display: flex;
     align-items: center;
@@ -270,15 +332,30 @@ h4 {
     border-left-color: #ffc107;
 }
 .booking-slot-item.status-confirmed {
-    background-color: #f0fff4;
-    border-left-color: #28a745;
+    /* 📌 อาจต้องเปลี่ยนสีพื้นหลังให้เป็นสีอ่อนของสีแดงในอนาคต */
+    background-color: #f0fff4; /* สีเขียวอ่อน (เดิม) */
+    border-left-color: #dc3545; /* เปลี่ยนเป็นสีแดง */
 }
 .booking-slot-item.status-cancelled {
     background-color: #fff0f0;
     border-left-color: #dc3545;
     opacity: 0.8;
 }
+.booking-slot-item.status-completed {
+    background-color: #e9ecef;
+    border-left-color: #6c757d;
+}
 
+.booking-status-tag {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 0.8em;
+    min-width: 80px;
+    text-align: center;
+}
 .status-pending .booking-status-tag { background-color: #fff3cd; color: #856404; }
-.status-confirmed .booking-status-tag { background-color: #d4edda; color: #155724; }
+.status-confirmed .booking-status-tag { background-color: #f8d7da; color: #721c24; } /* เปลี่ยนเป็นสีแดงอ่อน */
 .status-cancelled .booking-status-tag { background-color: #f8d7da; color: #721c24; }
+.status-completed .booking-status-tag { background-color: #d1ecf1; color: #0c5460; }
+

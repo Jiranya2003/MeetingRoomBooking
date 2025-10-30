@@ -1,5 +1,10 @@
 import api from '../axiosInstance'; // 💡 สมมติว่าไฟล์ axiosInstance.js อยู่ในโฟลเดอร์แม่
 
+/**
+ * Service Layer สำหรับจัดการ API ของทรัพยากร Booking (การจอง)
+ * API Path: /api/bookings
+ */
+
 // 1. สร้างรายการจองใหม่ (POST /api/bookings)
 export const createBooking = (data) => api.post('/bookings', data);
 
@@ -12,6 +17,7 @@ export const getAllBookings = () => api.get('/bookings');
 
 /**
  * 4. อัปเดตสถานะการจอง (สำหรับ Admin) 
+ * PATCH /api/bookings/:id/status
  * @param {number} id - ID ของการจอง
  * @param {string} status - สถานะใหม่ (เช่น 'confirmed', 'cancelled', 'completed')
  */
@@ -26,12 +32,14 @@ export const deleteBooking = (id) => api.delete(`/bookings/${id}`);
  * @param {object} params - พารามิเตอร์รวมถึง room_id และ date
  */
 export const getExistingBookingsByRoomAndDate = ({ room_id, date }) => {
+    // 💡 การใช้ { params: { room_id, date } } เป็นวิธีมาตรฐานของ Axios ที่ถูกต้อง
     return api.get(`/bookings/available`, {
         params: { room_id, date }
     });
 };
 
-// 💡 หากคุณมี service สำหรับ Rooms แยกต่างหาก คุณอาจต้องสร้างไฟล์ roomService.js
-// แต่หากคุณรวมไว้ในไฟล์นี้ ก็สามารถเพิ่มฟังก์ชันที่เกี่ยวข้องกับ Rooms เข้าไปได้
-// เช่น:
-// export const getRooms = () => api.get('/rooms');
+// 7. ดึงรายละเอียดการจองตาม ID
+export const getBooking = (id) => api.get(`/bookings/${id}`);
+
+// 8. อัปเดตข้อมูลการจอง (ยกเว้นสถานะ)
+export const updateBooking = (id, data) => api.put(`/bookings/${id}`, data);

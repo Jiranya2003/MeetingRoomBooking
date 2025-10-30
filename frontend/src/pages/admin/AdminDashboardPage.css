@@ -24,12 +24,14 @@
     margin-bottom: 30px;
 }
 
-/* --- Metrics Grid Layout (4 Charts/Cards) --- */
+/* --- Metrics Grid Layout (Equal Height) --- */
 .chart-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
     margin-bottom: 30px;
+    /* ทำให้กล่อง Metrics มีความสูงเท่ากัน */
+    align-items: stretch; 
 }
 
 /* --- Individual Metric Card Styling --- */
@@ -43,6 +45,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border-left: 5px solid; 
     transition: transform 0.2s;
+    min-height: 90px;
 }
 
 .metric-card:hover {
@@ -75,6 +78,67 @@
     justify-content: center;
 }
 
+/* ------------------------------------------------------------------- */
+/* --- FILTER BAR STYLING (ปุ่มกรองขนาดเท่ากัน 180px) --- */
+/* ------------------------------------------------------------------- */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 15px;
+    
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e0e0e0;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.filter-icon {
+    color: #007bff;
+    min-width: 20px;
+}
+
+.filter-input, 
+.filter-select {
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px; 
+    font-size: 1em;
+    height: 40px; /* กำหนดความสูงคงที่ */
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    background-color: #f8f9fa;
+    color: #343a40; 
+    font-weight: 500;
+    cursor: pointer;
+    
+    /* 🚀 NEW: กำหนดความกว้างคงที่และปิดการยืด/หด */
+    width: 180px; 
+    flex-grow: 0; 
+    flex-shrink: 0; 
+
+    /* ปรับ appearance สำหรับ Date Input */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* ยืนยันขนาดคงที่สำหรับช่องวันที่ */
+.filter-input[type="date"] {
+    width: 180px; 
+    box-sizing: border-box; 
+}
+
+/* เน้นเมื่อโฟกัส */
+.filter-input:focus, 
+.filter-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); 
+    outline: none;
+    background-color: white;
+}
+
 /* --- Bookings Table Styling --- */
 .table-container { overflow-x: auto; }
 
@@ -82,7 +146,7 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    min-width: 800px;
+    min-width: 900px;
 }
 
 .data-table th, .data-table td {
@@ -104,103 +168,65 @@
     background-color: #e9ecef;
 }
 
-/* Status Colors for Table */
-.status-cell { font-weight: 600; }
-.status-confirmed { color: #28a745; }
-.status-pending { color: #ffc107; }
-.status-cancelled { color: #dc3545; }
-.loading-message, .empty-message { padding: 15px; text-align: center; }
 
-/* --- Rooms List Styling (Card Grid) --- */
-
-.room-list-grid {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+.data-table .status-cell { 
+    font-weight: 600; 
+    /* ลบสไตล์ Tag ออกเพื่อให้สีพื้นหลังเต็ม Cell */
+    border-radius: 0 !important; 
+    padding: 12px 15px !important; /* ใช้ padding มาตรฐานของ Cell */
+    margin: 0 !important;
+    display: table-cell !important; /* ใช้ค่ามาตรฐานของตาราง */
 }
 
-.room-item-card {
-    padding: 15px;
-    background-color: #f7f7f7;
-    border-radius: 8px;
-    border: 1px solid #e0eeef;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    transition: box-shadow 0.2s, transform 0.2s;
+/* --- Status Colors for Table Cell (ลบพื้นหลังสีออก คงไว้เฉพาะสีตัวอักษร) --- */
+.data-table .status-cell { 
+    font-weight: 600; 
+    background-color: transparent !important; 
+}
+/* 1. 🟡 สถานะ: IN_USE (กำหนดเป็นสีเหลือง) */
+.data-table .status-cell.status-in_use {
+    background-color: #fff3cd; /* สีเหลืองอ่อน */
+    color: #856404; /* ข้อความสีน้ำตาลเข้ม */
 }
 
-.room-item-card:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-}
-
-.room-info-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-}
-
-.room-name {
-    font-weight: 700;
-    font-size: 1.15em;
-    color: #007bff;
-}
-
-.room-details-body {
-    font-size: 0.9em;
-}
-
-.detail-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #495057;
-    margin: 5px 0;
-}
-
-.detail-line span {
-    font-weight: 600;
-}
-
-/* Status Tags for Room Availability */
-.room-status-tag {
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.75em;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.room-status-tag.status-available {
+/* 2. 🟢 สถานะ: อนุมัติแล้ว (CONFIRMED) - ตัวอักษรสีเขียว */
+.data-table .status-cell.status-booked {
+    color: #28a745;    
     background-color: #d4edda; 
-    color: #155724;
 }
 
-.room-status-tag.status-unavailable {
-    background-color: #f8d7da; 
-    color: #721c24;
+/* 3. 🔴 สถานะ: ถูกยกเลิก/ปฏิเสธ (CANCELLED / REJECTED) - ตัวอักษรสีแดง */
+.data-table .status-cell.status-cancelled,
+.data-table .status-cell.status-rejected {
+    color: #dc3545; 
 }
 
-/* Utilities for Equipment Check */
-.equip-status {
-    font-weight: 500;
+/* 4. 🔵 สถานะ: เสร็จสิ้น/ใช้งานแล้ว (COMPLETED / IN_USE) - ตัวอักษรสีน้ำเงิน */
+.data-table .status-cell.status-completed {
+background-color: #e2e6ea; /* สีเทาฟ้าอ่อน */
+    color: #004085;; /* ข้อความสีเทาเข้ม */
 }
-.text-success { color: #28a745; font-weight: 700; }
-.text-danger { color: #dc3545; font-weight: 700; }
+
+
 
 /* --- Responsive Adjustments --- */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .chart-grid {
         grid-template-columns: 1fr;
     }
     .admin-dashboard {
         padding: 15px;
     }
-    .room-list-grid {
-        grid-template-columns: 1fr;
+    .filter-bar {
+        /* ปรับ Layout ให้เป็นแนวตั้ง */
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-input, 
+    .filter-select {
+        /* ในหน้าจอเล็ก ให้กลับไปเต็มความกว้าง */
+        width: 100%; 
+        min-width: unset;
+        flex: 1 1 100%;
     }
 }

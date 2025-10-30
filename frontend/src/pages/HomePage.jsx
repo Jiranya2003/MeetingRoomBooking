@@ -38,7 +38,7 @@ const RoomCard = ({ room }) => {
             <Link 
                 to={`/room/${room.id}`} 
                 className="btn-details"
-            >รายละเอียด / การจอง</Link>
+            >รายละเอียด</Link>
         </div>
     );
 };

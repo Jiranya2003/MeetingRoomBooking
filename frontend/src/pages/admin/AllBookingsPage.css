@@ -119,3 +119,61 @@
     background-color: #f8d7da; /* Light Red */
     color: #721c24; /* Dark Red Text */
 }
+
+/* --- STATUS TAG AND CELL STYLING FOR ALL BOOKINGS PAGE --- */
+
+/* กำหนดสไตล์พื้นฐานของ Cell สถานะ */
+.bookings-table .status-cell { 
+    padding: 0; /* ลบ padding เดิมของ td */
+}
+
+.bookings-table .status-tag {
+    /* สไตล์การแสดงผลเป็น Tag */
+    font-weight: 600; 
+    border-radius: 4px; 
+    padding: 4px 8px; /* เพิ่ม padding เล็กน้อยเพื่อให้สีพื้นหลังดูดี */
+    margin: 2px 0;
+    display: inline-block;
+    font-size: 0.9em;
+    
+    /* 🚀 NEW: ใช้ !important กับ color เพื่อบังคับให้สีแสดงผล */
+    color: inherit !important; 
+}
+
+/* 1. 🟢 สถานะ: อนุมัติแล้ว (CONFIRMED) */
+.bookings-table .status-tag.status-confirmed {
+    background-color: #d4edda !important; 
+    color: #155724 !important; /* 💡 ใช้ !important เพื่อให้สีเขียวเข้มแสดงผล */
+}
+
+/* 2. 🟡 สถานะ: PENDING (รออนุมัติ) */
+.bookings-table .status-tag.status-pending {
+    background-color: #fff3cd !important; 
+    color: #856404 !important; /* 💡 ใช้ !important */
+}
+
+/* 3. 🟡 สถานะ: IN_USE (ใช้งานอยู่) */
+.bookings-table .status-tag.status-inuse {
+    background-color: #ffeeba !important; 
+    color: #856404 !important; /* 💡 ใช้ !important */
+}
+
+/* 4. 🔴 สถานะ: ถูกยกเลิก/ปฏิเสธ/Booked */
+.bookings-table .status-tag.status-cancelled,
+.bookings-table .status-tag.status-rejected,
+.bookings-table .status-tag.status-booked {
+    background-color: #f8d7da !important; 
+    color: #721c24 !important; /* 💡 ใช้ !important */
+}
+
+/* 5. 🔵 สถานะ: เสร็จสิ้น (COMPLETED) */
+.bookings-table .status-tag.status-completed {
+    background-color: #e2e6ea !important; 
+    color: #495057 !important; /* 💡 ใช้ !important */
+}
+
+/* 6. ⚫ สถานะ: ไม่ทราบค่า (UNKNOWN) */
+.bookings-table .status-tag.status-unknown {
+    background-color: #f1f1f1 !important; 
+    color: #6c757d !important; 
+}

@@ -1,7 +1,7 @@
 import api from '../axiosInstance';
 
 /**
- * Service Layer สำหรับจัดการ API ของทรัพยากร Room (ห้องประชุมเดิม)
+ * Service Layer สำหรับจัดการ API ของทรัพยากร Room (ห้องประชุม)
  * API Path: /api/rooms
  */
 

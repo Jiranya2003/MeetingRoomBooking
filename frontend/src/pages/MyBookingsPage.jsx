@@ -5,22 +5,24 @@ import { getMyBookings, deleteBooking } from '../api/services/bookingService';
 import { Calendar, Trash2, MapPin, Clock } from 'lucide-react'; 
 import './MyBookingsPage.css';
 
-// 📌 ฟังก์ชันช่วยในการกำหนด Class และข้อความสถานะ
+// ------------------------------------------------------------------
+// ⭐ แก้ไข: ฟังก์ชันช่วยในการกำหนด Class และข้อความสถานะ (ใช้ค่าจาก Backend)
+// ------------------------------------------------------------------
 const getStatusInfo = (status) => {
     const lowerStatus = status?.toLowerCase();
     switch (lowerStatus) {
-        case 'confirmed':
-            return { tagClass: 'status-confirmed', text: 'Confirmed' };
-        case 'pending':
-            return { tagClass: 'status-pending', text: 'Pending' };
-        case 'completed':
-            return { tagClass: 'status-completed', text: 'Completed' };
-        case 'cancelled':
-            return { tagClass: 'status-cancelled', text: 'Cancelled' };
-        case 'rejected':
-            return { tagClass: 'status-rejected', text: 'Rejected' };
+        case 'booked': // ⭐ สถานะจองล่วงหน้า (แทน 'confirmed' หรือ 'pending')
+            return { tagClass: 'status-booked', text: 'จองแล้ว' };
+        case 'in_use': // ⭐ สถานะกำลังใช้งาน
+            return { tagClass: 'status-inuse', text: 'กำลังใช้งาน' };
+        case 'completed': // สถานะเสร็จสิ้น
+            return { tagClass: 'status-completed', text: 'เสร็จสิ้น' };
+        case 'cancelled': // สถานะถูกยกเลิก (จากการลบ)
+            return { tagClass: 'status-cancelled', text: 'ยกเลิกแล้ว' };
+        // หากมีสถานะเพิ่มเติม เช่น REJECTED ให้เพิ่มตรงนี้
         default:
-            return { tagClass: 'status-unknown', text: 'Unknown' };
+            // นี่คือสาเหตุของ 'Unknown' เดิม
+            return { tagClass: 'status-unknown', text: 'ไม่ทราบสถานะ' }; 
     }
 };
 
@@ -32,12 +34,12 @@ const formatBookingTimes = (startIso, endIso) => {
         const endDate = new Date(endIso);
         
         // จัดรูปแบบวันที่ (DD/MM/YYYY)
-        const dateStr = startDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const dateStr = startDate.toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' });
         
         // จัดรูปแบบเวลา (HH:MM)
-        const timeOptions = { hour: '2-digit', minute: '2-digit' };
-        const startTimeStr = startDate.toLocaleTimeString('en-GB', timeOptions);
-        const endTimeStr = endDate.toLocaleTimeString('en-GB', timeOptions);
+        const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false };
+        const startTimeStr = startDate.toLocaleTimeString('th-TH', timeOptions);
+        const endTimeStr = endDate.toLocaleTimeString('th-TH', timeOptions);
 
         return { 
             date: dateStr, 
@@ -64,8 +66,9 @@ export default function MyBookingsPage() {
             })
             .catch(err => {
                 console.error("Failed to load user bookings:", err);
-                // 🚨 แสดงข้อความ Error ที่ชัดเจน
-                setError(`Failed to load your bookings: ${err.message}`);
+                // 🚨 ปรับปรุง: ดึงข้อความ error จาก Server ถ้ามี
+                const errorMessage = err?.response?.data?.message || `Failed to load your bookings.`;
+                setError(errorMessage);
             })
             .finally(() => setIsLoading(false));
     };
@@ -77,21 +80,24 @@ export default function MyBookingsPage() {
     const handleDelete = (id, currentStatusText) => {
         const currentStatus = currentStatusText.toLowerCase();
 
-        // อนุญาตให้ยกเลิกได้เฉพาะ Pending และ Confirmed
-        if (currentStatus === 'completed' || currentStatus === 'rejected' || currentStatus === 'cancelled') {
-            alert(`Cannot cancel a booking that is already ${currentStatus}.`);
+        // ⭐ การแก้ไข: อนุญาตให้ยกเลิกได้เฉพาะ 'จองแล้ว' (BOOKED)
+        // เนื่องจาก Backend มีการตรวจสอบเวลา canCancelBooking(booking) อีกชั้นหนึ่ง
+        if (currentStatus !== 'จองแล้ว') { 
+            alert(`ไม่สามารถยกเลิกการจองที่สถานะเป็น ${currentStatus} ได้`);
             return;
         }
 
-        if (window.confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) {
+        if (window.confirm('คุณต้องการยกเลิกการจองนี้หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้')) {
             deleteBooking(id)
                 .then(() => {
-                    alert('Booking cancelled successfully.');
+                    alert('ยกเลิกการจองสำเร็จ');
                     fetchBookings(); // Reload bookings list
                 })
                 .catch(err => {
                     console.error(err);
-                    alert(err?.response?.data?.message || 'Failed to cancel booking.');
+                    // 🚨 การแก้ไข: ดึงข้อความ error จาก Server เช่น "ไม่สามารถยกเลิกได้เนื่องจากใกล้ถึงเวลาเริ่มแล้ว"
+                    const errorMessage = err?.response?.data?.message || 'ไม่สามารถยกเลิกการจองได้ (Server Error)';
+                    alert(errorMessage);
                 });
         }
     };
@@ -100,39 +106,38 @@ export default function MyBookingsPage() {
         <div className="my-bookings-container">
             <h1 className="page-header"><Calendar size={28} /> My Bookings</h1>
 
-            {isLoading && <p className="loading-message">Loading your bookings...</p>}
+            {isLoading && <p className="loading-message">กำลังโหลดรายการจองของคุณ...</p>}
             {error && <div className="error-message">{error}</div>}
 
-            {!isLoading && bookings.length === 0 && <p className="empty-state">You have no bookings yet.</p>}
+            {!isLoading && bookings.length === 0 && <p className="empty-state">คุณยังไม่มีรายการจอง</p>}
 
             {!isLoading && bookings.length > 0 && (
                 <div className="table-wrapper">
                     <table className="bookings-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Room Name</th>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>Status</th>
+                                {/* <th>สถานะ</th> */}
                                 <th className="action-header">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {bookings.map(b => {
-                                // 🎯 การแก้ไข: ใช้ฟังก์ชัน formatBookingTimes ใหม่
+                                // 🎯 การแก้ไข: ใช้ฟังก์ชัน getStatusInfo ที่ปรับปรุงแล้ว
                                 const times = formatBookingTimes(b.start_time, b.end_time);
                                 const statusInfo = getStatusInfo(b.status);
                                 
-                                // อนุญาตให้ยกเลิกได้หากสถานะยังไม่ใช่ Completed, Cancelled หรือ Rejected
-                                const isCancellable = statusInfo.text === 'Pending' || statusInfo.text === 'Confirmed';
+                                // อนุญาตให้ยกเลิกได้เฉพาะ 'จองแล้ว' (BOOKED)
+                                const isCancellable = statusInfo.text === 'จองแล้ว';
 
                                 return (
                                     <tr 
                                         key={b.id} 
                                         className={`booking-row ${statusInfo.tagClass}`}
                                     >
-                                        <td>{b.id}</td>
+                                        
                                         <td><MapPin size={16} className="icon-inline" /> {b.room_name || 'N/A'}</td>
                                         
                                         {/* 🎯 แสดงวันที่ */}
@@ -141,19 +146,20 @@ export default function MyBookingsPage() {
                                         {/* 🎯 แสดงช่วงเวลา */}
                                         <td><Clock size={16} className="icon-inline" /> {times.startTime} - {times.endTime}</td>
                                         
-                                        <td className="status-cell">
+                                        {/* <td className="status-cell">
                                             <span className={`status-tag ${statusInfo.tagClass}`}>
                                                 {statusInfo.text}
                                             </span>
-                                        </td>
+                                        </td> */}
+                                        
                                         <td className="action-cell">
                                             {isCancellable ? ( 
                                                 <button
-                                                    // ส่ง statusInfo.text (Confirmed/Pending) ไปยัง handleDelete
+                                                    // ส่ง statusInfo.text ('จองแล้ว') ไปเพื่อใช้ในการตรวจสอบ Alert
                                                     onClick={() => handleDelete(b.id, statusInfo.text)} 
                                                     className="btn-cancel-booking"
                                                 >
-                                                    <Trash2 size={16} /> Cancel
+                                                    <Trash2 size={16} /> ยกเลิก
                                                 </button>
                                             ) : (
                                                 <span className="text-muted">{statusInfo.text}</span>

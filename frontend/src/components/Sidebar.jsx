@@ -22,7 +22,7 @@ export default function Sidebar() {
         // Path สำหรับปฏิทินการจอง
         { to: '/calendar', label: 'ปฏิทินการจอง', icon: <Calendar /> },
         // Path สำหรับการจองของฉัน (แก้ไขจาก /MyBookingsPage เป็น /my-bookings)
-        { to: '/my-bookings', label: 'รายการจองทั้งหมด', icon: <Briefcase /> },
+        { to: '/my-bookings', label: 'รายการจองของฉัน', icon: <Briefcase /> },
         // 🆕 เพิ่ม: จอง Meeting Room ใหม่
         { to: '/meeting-booking', label: 'จอง Meeting Room', icon: <DoorOpen /> },
     ];

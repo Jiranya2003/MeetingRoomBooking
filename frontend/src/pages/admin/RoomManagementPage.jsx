@@ -95,7 +95,7 @@ export default function RoomManagementPage() {
                     <table className="data-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                {/* ⭐ ลบ <th>ID</th> ออกแล้ว */}
                                 <th>Name</th>
                                 <th>Location</th>
                                 <th>Capacity</th>
@@ -107,7 +107,7 @@ export default function RoomManagementPage() {
                         <tbody>
                             {rooms.map(r => (
                                 <tr key={r.id}>
-                                    <td>{r.id}</td>
+                                    {/* ⭐ ลบ <td>{r.id}</td> ออกแล้ว */}
                                     <td>{r.name}</td>
                                     <td>{r.location}</td>
                                     <td>{r.capacity}</td>
@@ -115,11 +115,11 @@ export default function RoomManagementPage() {
                                     <td>{r.equipment}</td>
                                     <td>
                                       <button 
-                                        onClick={() => handleDeleteRoom(r.id)} 
-                                        className="btn-icon btn-delete"
-                                      >
-                                        <Trash2 size={16} /> Delete
-                                      </button>
+                                            onClick={() => handleDeleteRoom(r.id)} 
+                                            className="btn-icon btn-delete"
+                                        >
+                                            <Trash2 size={16} /> Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
